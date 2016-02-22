@@ -20,8 +20,47 @@ class DjangoMigrations(models.Model):
         managed = False
         db_table = 'django_migrations'
 
-class FoodType(models.Model):
-    id = models.IntegerField(primary_key=True)
+class Resturants(models.Model):
+    name = models.CharField(max_length=100)
+    foodType = models.CharField(max_length=100)
+
+# many to one relationship pizza has a resturant
+class Pizza(models.Model):
+    Resturants = models.ForeignKey(Resturants, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+
+# many to one relationship burger has a resturant
+class Burger(models.Model):
+    Resturants = models.ForeignKey(Resturants, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+
+# many to one relationship sushi has a resturant
+class Sushi(models.Model):
+    Resturants = models.ForeignKey(Resturants, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+
+# many to one relationship MenuPizza has a Pizza
+class MenuPizza(models.Model):
+    Pizza = models.ForeignKey(Pizza, on_delete=models.CASCADE)
+    product = models.CharField(max_length=100)
+    price = models.IntegerField()
+
+class MenuBurger(models.Model):
+    Pizza = models.ForeignKey(Pizza, on_delete=models.CASCADE)
+    product = models.CharField(max_length=100)
+    price = models.IntegerField()
+
+class MenuSushi(models.Model):
+    Pizza = models.ForeignKey(Pizza, on_delete=models.CASCADE)
+    product = models.CharField(max_length=100)
+    price = models.IntegerField()
+
+class OrderDB(models.Model):
+    orderMaker = models.CharField(max_length=100)
+
+
+
+
 
     class Meta:
         managed = False
