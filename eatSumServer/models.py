@@ -79,7 +79,7 @@ class Person(models.Model):
 
 class Membership(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
-    order = models.ForeignKey(order, on_delete=models.CASCADE)
+    orders = models.ForeignKey(order, on_delete=models.CASCADE)
 
     class Meta:
         managed = False
