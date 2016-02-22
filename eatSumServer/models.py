@@ -45,22 +45,41 @@ class MenuPizza(models.Model):
     product = models.CharField(max_length=100)
     price = models.IntegerField()
 
+# many to one relationship MenuBurger has a Burger
 class MenuBurger(models.Model):
-    Pizza = models.ForeignKey(Pizza, on_delete=models.CASCADE)
+    Burger = models.ForeignKey(Pizza, on_delete=models.CASCADE)
     product = models.CharField(max_length=100)
     price = models.IntegerField()
 
+# many to one relationship MenuSushi has a Sushi
 class MenuSushi(models.Model):
-    Pizza = models.ForeignKey(Pizza, on_delete=models.CASCADE)
+    Sushi = models.ForeignKey(Pizza, on_delete=models.CASCADE)
     product = models.CharField(max_length=100)
     price = models.IntegerField()
 
 class OrderDB(models.Model):
     orderMaker = models.CharField(max_length=100)
 
+# many to one relationship order has a OrderDB
+class order(models.Model):
+    OrderDB = models.ForeignKey(Pizza, on_delete=models.CASCADE)
+    name = models.CharField(max_length=128)
+    members = models.ManyToManyField(Person, through='Membership')
+    items = models.CharField(max_length=100)
+    price = price = models.IntegerField()
 
+    def __str__(self):              # __unicode__ on Python 2
+        return self.name
 
+class Person(models.Model):
+    name = models.CharField(max_length=128)
 
+    def __str__(self):              # __unicode__ on Python 2
+        return self.name
+
+class Membership(models.Model):
+    person = models.ForeignKey(Person, on_delete=models.CASCADE)
+    order = models.ForeignKey(order, on_delete=models.CASCADE)
 
     class Meta:
         managed = False
